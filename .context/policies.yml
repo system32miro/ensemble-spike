@@ -1,0 +1,11 @@
+editable_paths:
+  - src/calc.py
+  - tests/test_calc.py
+blocked_paths:
+  - .github/**
+  - infra/**
+max_time_seconds: 600
+max_tokens: 200000
+allow_network: false
+notes: "Defaults para o spike; adaptar por repositório conforme necessário"
+

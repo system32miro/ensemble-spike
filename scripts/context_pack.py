@@ -3,6 +3,9 @@ import json
 import os
 import subprocess
 from pathlib import Path
+from typing import Any, Dict
+
+import yaml
 
 
 def git(cmd: list[str], cwd: Path) -> str:
@@ -16,6 +19,37 @@ def read_file_lines(path: Path, start: int, end: int) -> str:
     start_idx = max(1, start) - 1
     end_idx = min(len(lines), end)
     return "".join(lines[start_idx:end_idx])
+
+
+def load_policies(repo_dir: Path, default_editable_paths: list[str]) -> Dict[str, Any]:
+    """Load policies from .context/policies.yml if present; otherwise use defaults.
+
+    The editable_paths default to the provided list of files; blocked_paths and limits
+    have sane defaults. Unknown keys in YAML are preserved.
+    """
+    defaults: Dict[str, Any] = {
+        "editable_paths": list(default_editable_paths),
+        "blocked_paths": [".github/**", "infra/**"],
+        "max_time_seconds": 600,
+        "max_tokens": 200000,
+    }
+    policies_path = repo_dir / ".context" / "policies.yml"
+    if policies_path.exists():
+        try:
+            with policies_path.open("r", encoding="utf-8") as f:
+                loaded = yaml.safe_load(f) or {}
+            # merge shallowly; YAML overrides defaults
+            if not isinstance(loaded, dict):
+                loaded = {}
+            merged = {**defaults, **loaded}
+            # ensure editable_paths exists
+            if not merged.get("editable_paths"):
+                merged["editable_paths"] = list(default_editable_paths)
+            return merged
+        except Exception:
+            # fallback to defaults if YAML cannot be parsed
+            return defaults
+    return defaults
 
 
 def build_context_pack(repo_dir: Path, task_id: str, objective: str, files: list[str]) -> dict:
@@ -50,12 +84,7 @@ def build_context_pack(repo_dir: Path, task_id: str, objective: str, files: list
             "Adicionar pelo menos 1 teste relevante",
             "Editar apenas paths permitidos",
         ],
-        "policies": {
-            "editable_paths": files,
-            "blocked_paths": [".github/**", "infra/**"],
-            "max_time_seconds": 600,
-            "max_tokens": 200000,
-        },
+        "policies": load_policies(repo_dir, files),
         "focus": {"files": focus_files, "symbols": []},
         "evidence": evidence,
         "style": {"language": "python", "linters": ["pytest"], "notes": "idiomático, simples"},
