@@ -1,5 +1,7 @@
 # Ensemble Spike — CLIs de IA a colaborar sobre o mesmo repositório
 
+![Docs Gen (merge)](https://github.com/system32miro/ensemble-spike/actions/workflows/docs-gen.yml/badge.svg?branch=spike/integration)
+
 Este mini‑projeto valida que é possível orquestrar múltiplos CLIs de IA para coding — Claude Code (Opus 4.1), Gemini CLI e Cursor CLI (GPT‑5) — a trabalhar em paralelo sobre o MESMO commit e com o MESMO contexto, escolhendo automaticamente o melhor diff com base em testes/lints.
 
 - Claude Code: https://docs.anthropic.com/en/docs/claude-code/overview
@@ -18,6 +20,11 @@ Este mini‑projeto valida que é possível orquestrar múltiplos CLIs de IA par
 - `scripts/select_best.ps1`: avalia candidatos (pytest + diff shortstat), pontua e integra o melhor.
 - `PLAN.md`: plano detalhado para evoluir isto para um MVP/Produto.
 - `VALIDATION.md`: resumo da validação local.
+
+## Context Engineering
+- Contexto consistente e versionado através de um ContextPack JSON gerado em PRs.
+- "Doc Weavers" atualizam blocos AUTO em Markdown no merge (p. ex. `README.md`).
+- Workflows no GitHub Actions garantem rastreabilidade e reprodutibilidade do contexto.
 
 ## Requisitos
 - Windows + PowerShell, Git e Python 3.10+.
@@ -53,12 +60,6 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\select_best.ps1 -A
 ---
 
 Licença: experimental (spike). Use por sua conta e risco.
-
-<!-- BEGIN:AUTO:API -->
-Resumo automático dos ficheiros Python em `src`:
-
-- `src/calc.py`: 10 linhas
-<!-- END:AUTO:API -->
 
 <!-- BEGIN:AUTO:API -->
 Resumo automático dos ficheiros Python em `src`:
