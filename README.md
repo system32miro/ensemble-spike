@@ -63,3 +63,5 @@ Resumo automático dos ficheiros Python em `src`:
 <!-- BEGIN:AUTO:API -->
 (placeholder, ser substitudo pelo workflow)
 <!-- END:AUTO:API -->
+
+Pequeno ajuste para testar ciclo de contexto: 2025-08-08T11:41:30
