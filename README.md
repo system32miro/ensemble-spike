@@ -59,3 +59,7 @@ Resumo automÃ¡tico dos ficheiros Python em `src`:
 
 - `src\calc.py`: 10 linhas
 <!-- END:AUTO:API -->
+
+<!-- BEGIN:AUTO:API -->
+(placeholder, será substituído pelo workflow)
+<!-- END:AUTO:API -->
