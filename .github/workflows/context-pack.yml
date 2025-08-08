@@ -34,7 +34,17 @@ jobs:
           BASE_SHA="${{ github.event.pull_request.base.sha }}"
           HEAD_SHA="${{ github.sha }}"
           files=$(git diff --name-only "$BASE_SHA" "$HEAD_SHA" | tr '\n' ' ')
-          echo "files=$files" >> $GITHUB_OUTPUT
+          echo "files=$files" >> "$GITHUB_OUTPUT"
+
+      - name: Compute objective
+        id: obj
+        shell: bash
+        run: |
+          title="${{ github.event.pull_request.title }}"
+          if [ -z "$title" ]; then
+            title="${{ github.sha }}"
+          fi
+          echo "objective=$title" >> "$GITHUB_OUTPUT"
 
       - name: Generate ContextPack
         shell: bash
@@ -45,10 +55,12 @@ jobs:
             files="src/calc.py tests/test_calc.py"
           fi
           echo "Using files: $files"
+          # expand files safely into an array for --files
+          read -ra arr <<< "$files"
           python scripts/context_pack.py \
             --task-id "pr-${{ github.event.number }}" \
-            --objective "${{ github.event.pull_request.title }}" \
-            --files $files \
+            --objective "${{ steps.obj.outputs.objective }}" \
+            --files "${arr[@]}" \
             --out .context/context.json
 
       - name: Upload ContextPack artifact
