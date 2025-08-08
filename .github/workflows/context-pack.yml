@@ -25,7 +25,7 @@ jobs:
       - name: Install deps
         run: |
           python -m pip install --upgrade pip
-          pip install jsonschema
+          pip install jsonschema pyyaml
 
       - name: Compute changed files
         id: diff
