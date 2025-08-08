@@ -61,5 +61,5 @@ Resumo automÃ¡tico dos ficheiros Python em `src`:
 <!-- END:AUTO:API -->
 
 <!-- BEGIN:AUTO:API -->
-(placeholder, será substituído pelo workflow)
+(placeholder, ser substitudo pelo workflow)
 <!-- END:AUTO:API -->
