@@ -1,0 +1,36 @@
+name: Docs Gen (merge)
+
+on:
+  push:
+    branches:
+      - spike/integration
+
+permissions:
+  contents: write
+
+jobs:
+  docs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Update AUTO blocks
+        run: |
+          python scripts/weave_docs.py --file README.md --src src
+          git config user.name "context-bot"
+          git config user.email "context-bot@users.noreply.github.com"
+          if ! git diff --quiet; then
+            git add README.md
+            git commit -m "docs(auto): atualizar blocos AUTO"
+            git push
+          else
+            echo "Sem mudanças de docs"
+          fi
