@@ -57,9 +57,11 @@ Licença: experimental (spike). Use por sua conta e risco.
 <!-- BEGIN:AUTO:API -->
 Resumo automático dos ficheiros Python em `src`:
 
-- `src\calc.py`: 10 linhas
+- `src/calc.py`: 10 linhas
 <!-- END:AUTO:API -->
 
 <!-- BEGIN:AUTO:API -->
-(placeholder, ser substitudo pelo workflow)
+Resumo automático dos ficheiros Python em `src`:
+
+- `src/calc.py`: 10 linhas
 <!-- END:AUTO:API -->
