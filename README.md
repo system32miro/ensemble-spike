@@ -53,3 +53,9 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\select_best.ps1 -A
 ---
 
 Licença: experimental (spike). Use por sua conta e risco.
+
+<!-- BEGIN:AUTO:API -->
+Resumo automático dos ficheiros Python em `src`:
+
+- `src\calc.py`: 10 linhas
+<!-- END:AUTO:API -->

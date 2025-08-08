@@ -1,0 +1,209 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "ContextPack v1",
+    "type": "object",
+    "required": [
+        "task_id",
+        "repo",
+        "objective",
+        "acceptance_criteria",
+        "policies",
+        "focus",
+        "expected_output"
+    ],
+    "properties": {
+        "task_id": {
+            "type": "string"
+        },
+        "repo": {
+            "type": "object",
+            "required": [
+                "sha",
+                "branch"
+            ],
+            "properties": {
+                "sha": {
+                    "type": "string"
+                },
+                "branch": {
+                    "type": "string"
+                }
+            }
+        },
+        "objective": {
+            "type": "string"
+        },
+        "acceptance_criteria": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "policies": {
+            "type": "object",
+            "required": [
+                "editable_paths",
+                "blocked_paths",
+                "max_time_seconds",
+                "max_tokens"
+            ],
+            "properties": {
+                "editable_paths": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "blocked_paths": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "max_time_seconds": {
+                    "type": "integer",
+                    "minimum": 1
+                },
+                "max_tokens": {
+                    "type": "integer",
+                    "minimum": 1
+                }
+            }
+        },
+        "focus": {
+            "type": "object",
+            "required": [
+                "files"
+            ],
+            "properties": {
+                "files": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "required": [
+                            "path"
+                        ],
+                        "properties": {
+                            "path": {
+                                "type": "string"
+                            },
+                            "spans": {
+                                "type": "array",
+                                "items": {
+                                    "type": "array",
+                                    "minItems": 2,
+                                    "maxItems": 2,
+                                    "items": {
+                                        "type": "integer"
+                                    }
+                                },
+                                "default": []
+                            }
+                        }
+                    }
+                },
+                "symbols": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "required": [
+                            "name",
+                            "file"
+                        ],
+                        "properties": {
+                            "name": {
+                                "type": "string"
+                            },
+                            "file": {
+                                "type": "string"
+                            },
+                            "range": {
+                                "type": "array",
+                                "items": {
+                                    "type": "integer"
+                                },
+                                "minItems": 2,
+                                "maxItems": 2
+                            }
+                        }
+                    },
+                    "default": []
+                }
+            }
+        },
+        "evidence": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "required": [
+                    "file",
+                    "start",
+                    "end",
+                    "content"
+                ],
+                "properties": {
+                    "file": {
+                        "type": "string"
+                    },
+                    "start": {
+                        "type": "integer"
+                    },
+                    "end": {
+                        "type": "integer"
+                    },
+                    "content": {
+                        "type": "string"
+                    }
+                }
+            },
+            "default": []
+        },
+        "style": {
+            "type": "object",
+            "properties": {
+                "language": {
+                    "type": "string"
+                },
+                "linters": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "notes": {
+                    "type": "string"
+                }
+            }
+        },
+        "budgets": {
+            "type": "object",
+            "properties": {
+                "time_seconds": {
+                    "type": "integer"
+                },
+                "attempts": {
+                    "type": "integer"
+                }
+            }
+        },
+        "expected_output": {
+            "type": "object",
+            "required": [
+                "requires_tests",
+                "rationale",
+                "format"
+            ],
+            "properties": {
+                "requires_tests": {
+                    "type": "boolean"
+                },
+                "rationale": {
+                    "type": "string"
+                },
+                "format": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
