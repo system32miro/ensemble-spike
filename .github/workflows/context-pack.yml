@@ -37,12 +37,18 @@ jobs:
           echo "files=$files" >> $GITHUB_OUTPUT
 
       - name: Generate ContextPack
+        shell: bash
         run: |
           mkdir -p .context
+          files="${{ steps.diff.outputs.files }}"
+          if [ -z "$files" ]; then
+            files="src/calc.py tests/test_calc.py"
+          fi
+          echo "Using files: $files"
           python scripts/context_pack.py \
             --task-id "pr-${{ github.event.number }}" \
             --objective "${{ github.event.pull_request.title }}" \
-            --files ${{ steps.diff.outputs.files || 'src/calc.py tests/test_calc.py' }} \
+            --files $files \
             --out .context/context.json
 
       - name: Upload ContextPack artifact
