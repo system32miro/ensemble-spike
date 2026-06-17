@@ -16,6 +16,7 @@ Este mini‑projeto valida que é possível orquestrar múltiplos CLIs de IA par
 
 ## Estrutura principal
 - `src/` e `tests/`: projeto mínimo (Python + pytest).
+- `docs/numeric-summary.md`: regras da nova helper de estatísticas numéricas.
 - `CONTEXT.md` e `PROMPT.md`: instruções e critérios de aceitação partilhados.
 - `scripts/select_best.ps1`: avalia candidatos (pytest + diff shortstat), pontua e integra o melhor.
 - `PLAN.md`: plano detalhado para evoluir isto para um MVP/Produto.
