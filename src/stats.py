@@ -1,8 +1,17 @@
 import math
-from typing import Iterable
+from typing import Iterable, TypedDict
 
 
-def summarize_numbers(values: Iterable[object]) -> dict[str, object]:
+class NumberSummary(TypedDict):
+    count: int
+    total: int | float
+    minimum: int | float | None
+    maximum: int | float | None
+    average: float | None
+    values: list[int | float]
+
+
+def summarize_numbers(values: Iterable[object]) -> NumberSummary:
     numeric_values: list[int | float] = []
     total = 0
     minimum = None
