@@ -26,3 +26,7 @@ assert summary["average"] == 2.25
 The boolean exclusion is deliberate because Python treats `bool` as an `int`
 subclass. The finite-number check prevents `NaN` or infinity from propagating
 through `sum`, `min`, `max`, and `average`.
+
+## Review notes
+
+This PR is the clean Froholdt end-to-end demo for check-run lifecycle validation.
