@@ -3,16 +3,27 @@ from typing import Iterable
 
 
 def summarize_numbers(values: Iterable[object]) -> dict[str, object]:
-    numeric_values = [value for value in values if _is_supported_number(value)]
-    total = sum(numeric_values)
+    numeric_values: list[int | float] = []
+    total = 0
+    minimum = None
+    maximum = None
+
+    for value in values:
+        if not _is_supported_number(value):
+            continue
+        numeric_values.append(value)
+        total += value
+        minimum = value if minimum is None else min(minimum, value)
+        maximum = value if maximum is None else max(maximum, value)
+
     count = len(numeric_values)
 
     return {
         "count": count,
         "total": total,
-        "minimum": min(numeric_values) if numeric_values else None,
-        "maximum": max(numeric_values) if numeric_values else None,
-        "average": total / count if numeric_values else None,
+        "minimum": minimum,
+        "maximum": maximum,
+        "average": total / count if count else None,
         "values": numeric_values,
     }
 

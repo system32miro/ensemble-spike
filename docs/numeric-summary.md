@@ -16,9 +16,9 @@ The function accepts any iterable. Each item is inspected independently:
   subclass.
 - strings, `None`, objects, and other unsupported values are ignored.
 
-This follows the same runtime-filtering style as `sum_numbers`, but makes the
-boolean and non-finite number rules explicit so callers do not accidentally count
-flags or poison summary metrics with IEEE 754 sentinel values.
+This extends the lightweight filtering approach used by `sum_numbers` with
+stricter rules for booleans and non-finite numbers, so callers do not
+accidentally count flags or poison summary metrics with IEEE 754 sentinel values.
 
 ## Output shape
 
