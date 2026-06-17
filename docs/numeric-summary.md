@@ -11,12 +11,14 @@ The function accepts any iterable. Each item is inspected independently:
 
 - `int` values are included.
 - `float` values are included.
+- `NaN`, `Infinity`, and `-Infinity` are ignored.
 - `bool` values are ignored even though Python treats `bool` as an `int`
   subclass.
 - strings, `None`, objects, and other unsupported values are ignored.
 
-This mirrors `sum_numbers`, but makes the boolean rule explicit so callers do not
-accidentally count flags as numeric samples.
+This follows the same runtime-filtering style as `sum_numbers`, but makes the
+boolean and non-finite number rules explicit so callers do not accidentally count
+flags or poison summary metrics with IEEE 754 sentinel values.
 
 ## Output shape
 
@@ -82,3 +84,7 @@ isinstance(True, int) == True
 Counting `True` as `1` and `False` as `0` would make feature flags, validation
 results, or parser booleans silently skew summaries. The helper avoids that
 class of bug by filtering booleans before calculating metrics.
+
+The finite-number check is also deliberate. A single `NaN` would otherwise
+propagate through `sum`, `min`, `max`, and `average`, making every metric hard to
+compare or serialize safely.

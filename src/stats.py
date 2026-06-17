@@ -1,6 +1,5 @@
-from typing import Iterable, Union
-
-Number = Union[int, float]
+import math
+from typing import Iterable
 
 
 def summarize_numbers(values: Iterable[object]) -> dict[str, object]:
@@ -19,4 +18,4 @@ def summarize_numbers(values: Iterable[object]) -> dict[str, object]:
 
 
 def _is_supported_number(value: object) -> bool:
-    return isinstance(value, (int, float)) and not isinstance(value, bool)
+    return isinstance(value, (int, float)) and not isinstance(value, bool) and math.isfinite(value)
